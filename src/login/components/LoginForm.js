@@ -13,7 +13,7 @@ function LoginForm({ onLogin, changeForm }) {
   return (
     <>
       <FormsContainer>
-        <h2>Bienvenido</h2>
+        <h2>Bienvenido nuevamente</h2>
         <Form className="login" onSubmit={handleSubmit(onLogin)}>
           <InputContainer>
             <i className="fa-solid fa-envelope"></i>

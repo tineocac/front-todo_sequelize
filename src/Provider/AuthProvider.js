@@ -1,21 +1,36 @@
 import { createContext, useContext, useState } from "react";
+import { json } from "react-router-dom";
 
 const authContext = createContext();
 
 const useProvideAuth = () => {
-  const [user, setUser] = useState(null);
+  const [username, setUser] = useState(null);
 
-  const singIn = (name, cb) => {
-    console.log(name);
-    setUser(name);
+  const singIn = (user, cb) => {
+    console.log(user);
+    fetch("http://localhost:8000/api/v1/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem("userData", JSON.stringify(data));
+        setUser(data);
+      });
+    // la vamos a almacenar en el local storage
     return user;
   };
 
   const singOut = (cb) => {
     setUser(null);
+    // eliminar la informacion del local storage
   };
   return {
-    user,
+    username,
     singIn,
     singOut,
   };

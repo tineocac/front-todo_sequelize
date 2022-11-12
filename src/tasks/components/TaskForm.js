@@ -16,8 +16,26 @@ function TaskForm({ closeModal }) {
     formState: { errors },
   } = useForm();
 
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const { token, id } = userData;
+
   const createTask = (data) => {
-    console.log(data);
+    const { title, description, categories } = data;
+    const formatData = {
+      task: { title, description, userId: id },
+      categories,
+    };
+    console.log(formatData);
+    fetch("http://localhost:8000/api/v1/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formatData),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   };
   return (
     <FormsContainer>

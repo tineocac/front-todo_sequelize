@@ -29,8 +29,17 @@ function LoginPage() {
     navigate("/tasks");
   };
 
-  const onRegister = (d) => {
-    console.log(d);
+  const onRegister = (data) => {
+    console.log(data);
+    fetch("http://localhost:8000/api/v1/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((data) => data.json())
+      .then((data) => console.log(data));
     setIsOnLogin(true);
   };
 

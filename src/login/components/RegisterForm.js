@@ -13,7 +13,7 @@ function RegisterForm({ changeForm, onRegister }) {
   return (
     <>
       <FormsContainer>
-        <h2>Bienvenido</h2>
+        <h2>Listo para crear tareas</h2>
         <Form onSubmit={handleSubmit(onRegister)}>
           <InputContainer>
             <i class="fa-solid fa-user"></i>
@@ -34,7 +34,7 @@ function RegisterForm({ changeForm, onRegister }) {
             <Input
               type="password"
               placeholder="Contraseña"
-              {...register("passsword", { required: true })}
+              {...register("password", { required: true })}
             />
           </InputContainer>
           <p>
