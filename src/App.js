@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import "./App.css";
+import AuthGuard from "./Guards/AuthGuard";
+import LoginPage from "./login/pages/LoginPage";
+import { ProvideAuth } from "./Provider/AuthProvider";
+import { PrivateRoutes, PublicRoutes } from "./routes/routes";
+import TasksPage from "./tasks/TasksPage";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ProvideAuth>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Navigate to={PrivateRoutes.TASKS} />} />
+            <Route path="*" element={<h1>404 Not found</h1>} />
+            <Route path={PublicRoutes.LOGIN} element={<LoginPage />} />
+            <Route element={<AuthGuard />}>
+              <Route path={PrivateRoutes.TASKS} element={<TasksPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ProvideAuth>
     </div>
   );
 }
